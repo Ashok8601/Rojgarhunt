@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Post a Job</title>
+  <style>
+    :root{
+      --bg:#0b1020;--card:#121936;--muted:#7e8bb6;--text:#e9ecff;--accent:#6aa1ff;--accent-2:#75f0b8;--danger:#ff6b6b;
+      --ring: 0 0 0 4px rgba(106,161,255,.25)
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text);}
+    .wrap{max-width:1040px;margin:40px auto;padding:0 16px}
+    .header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center}
+    .logo span{font-weight:800;color:#00122b}
+    h1{font-size:26px;margin:0}
+    p.sub{margin:6px 0 0;color:var(--muted)}
+    form{background:#121936;border-radius:20px;padding:22px}
+    .grid{display:grid;grid-template-columns: repeat(12,1fr);gap:16px}
+    .col-6{grid-column: span 6}
+    .col-4{grid-column: span 4}
+    .col-8{grid-column: span 8}
+    .col-12{grid-column: span 12}
+    @media (max-width:800px){.col-6,.col-4,.col-8,.col-12{grid-column:span 12}}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .label{font-size:14px;color:#b8c3ff}
+    input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:#0e1430;color:var(--text)}
+    textarea{min-height:100px}
+    input:focus,select:focus,textarea:focus{box-shadow:var(--ring);border-color:rgba(106,161,255,.45)}
+    .actions{display:flex;gap:12px;justify-content:flex-end;margin-top:12px}
+    .btn{padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:600}
+    .primary{background:linear-gradient(135deg,var(--accent),#4b7dff);color:#00122b}
+    .danger{background:#2a0e12;color:#ffd6d6}
+    .ghost{background:#0a112b;color:#c8d4ff}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div class="logo"><span>J</span></div>
+      <div>
+        <h1>Post a Job</h1>
+        <p class="sub">Share your role details. Fields marked * are required.</p>
+      </div>
+    </div>
+
+    <!-- ✅ Final Form for Flask -->
+    <form id="jobForm" action="/post_job" method="post" enctype="multipart/form-data">
+      <div class="grid">
+        <div class="field col-8">
+          <label for="title" class="label">Job Title *</label>
+          <input id="title" name="title" type="text" required maxlength="80" placeholder="e.g., Python Developer">
+        </div>
+        <div class="field col-4">
+          <label for="dept" class="label">Department</label>
+          <input id="dept" name="department" type="text" placeholder="e.g., Engineering">
+        </div>
+        <div class="field col-6">
+          <label for="company" class="label">Company *</label>
+          <input id="company" name="company" type="text" required placeholder="Your company name">
+        </div>
+        <div class="field col-3">
+          <label for="location" class="label">Location *</label>
+          <input id="location" name="location" type="text" required placeholder="City, Country">
+        </div>
+        <div class="field col-3">
+          <label for="workmode" class="label">Work Mode *</label>
+          <select id="workmode" name="work_mode" required>
+            <option value="">Select</option>
+            <option>On-site</option>
+            <option>Hybrid</option>
+            <option>Remote</option>
+          </select>
+        </div>
+        <div class="field col-4">
+          <label for="jobtype" class="label">Job Type *</label>
+          <select id="jobtype" name="job_type" required>
+            <option value="">Select</option>
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Contract</option>
+            <option>Internship</option>
+          </select>
+        </div>
+        <div class="field col-4">
+          <label for="experience" class="label">Experience Level *</label>
+          <select id="experience" name="experience" required>
+            <option value="">Select</option>
+            <option>Fresher</option>
+            <option>Junior (1–3 yrs)</option>
+            <option>Mid (3–6 yrs)</option>
+            <option>Senior (6+ yrs)</option>
+          </select>
+        </div>
+        <div class="field col-4">
+          <label for="salaryMin" class="label">Salary Range</label>
+          <div style="display:flex;gap:8px">
+            <input id="salaryMin" name="salary_min" type="number" placeholder="Min">
+            <input id="salaryMax" name="salary_max" type="number" placeholder="Max">
+          </div>
+        </div>
+        <div class="field col-12">
+          <label for="desc" class="label">Description *</label>
+          <textarea id="desc" name="description" required></textarea>
+        </div>
+        <div class="field col-6">
+          <label for="resp" class="label">Responsibilities</label>
+          <textarea id="resp" name="responsibilities"></textarea>
+        </div>
+        <div class="field col-6">
+          <label for="req" class="label">Requirements</label>
+          <textarea id="req" name="requirements"></textarea>
+        </div>
+        <div class="field col-12">
+          <label for="skills" class="label">Skills (comma separated)</label>
+          <input id="skills" name="skills" type="text" placeholder="Python, Django, REST">
+        </div>
+        <div class="field col-6">
+          <label for="applyUrl" class="label">Apply URL</label>
+          <input id="applyUrl" name="apply_url" type="url" placeholder="https://example.com/apply">
+        </div>
+        <div class="field col-6">
+          <label for="applyEmail" class="label">Apply Email</label>
+          <input id="applyEmail" name="apply_email" type="email" placeholder="hr@example.com">
+        </div>
+        <div class="field col-4">
+          <label for="deadline" class="label">Deadline</label>
+          <input id="deadline" name="deadline" type="date">
+        </div>
+        <div class="field col-8">
+          <label for="logo" class="label">Company Logo</label>
+          <input id="logo" name="logo" type="file" accept="image/*">
+        </div>
+        <div class="actions col-12">
+          <button type="reset" class="btn danger">Clear</button>
+          <button type="submit" class="btn primary">Publish Job</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<div class="search-bar">
+  <form action="/search" method="POST" style="display:flex;width:100%;">
+    <input type="text" name="query" placeholder="Search jobs, skills, companies...">
+    <button type="submit">Search</button>
+  </form>
+</div>
+
+<!-- Search Results Section -->
+{% if result %}
+<section class="jobs">
+  <h3>Search Results</h3>
+  <div class="job-list">
+    {% for job in result %}
+    <div class="job-card">
+      <h4>{{ job['title'] }}</h4>
+      <p>Company: {{ job['company'] }}</p>
+      <p>Location: {{ job['location'] }}</p>
+      <a href="#" class="apply-btn">View Details</a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

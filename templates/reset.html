@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Password - Job Portal</title>
+  <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    }
+    .container {
+      width: 100%;
+      max-width: 420px;
+      padding: 2rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      color: #fff;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+    input::placeholder {
+      color: #ddd;
+    }
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .alt {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #eee;
+    }
+    .alt a {
+      color: #43cea2;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    @media(max-width: 480px) {
+      .container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Reset Password</h2>
+    <form method="POST" action="/reset">
+      <div class="form-group">
+        <label for="mobile">Mobile Number</label>
+        <input type="text" id="mobile" name="mobile" placeholder="Enter your registered mobile" required>
+      </div>
+            <div class="form-group">
+        <label for="current_password">Current Password</label>
+        <input type="password" id="new_password" name="password" placeholder="Enter current password" required>
+      </div>
+      <div class="form-group">
+        <label for="new_password">new Password</label>
+        <input type="password" id="new_password" name="new_password" placeholder="Enter new password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password" required>
+      </div>
+      <button type="submit">Reset Password</button>
+    </form>
+    <div class="alt">
+      Remembered your password? <a href="/login">Login</a>
+    </div>
+  </div>
+</body>
+</html>

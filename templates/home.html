@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Portal</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f6f7fb;color:#333;line-height:1.6;padding-bottom:70px;}
+
+/* Navbar */
+.navbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.5rem 1rem;
+  background:rgba(24,90,157,0.95);
+  position:fixed;top:0;width:100%;z-index:1000;
+  box-shadow:0 4px 15px rgba(0,0,0,0.1);
+  color:#fff;
+}
+.navbar h1{font-size:1.3rem;font-weight:700;color:#fff;}
+.navbar .nav-left{
+  display:flex;align-items:center;gap:1rem;flex:1;
+}
+.navbar .nav-left input[type="text"]{
+  flex:1;padding:0.5rem 0.8rem;border-radius:20px;border:none;outline:none;
+  font-size:0.9rem;
+}
+.navbar .hamburger{
+  display:flex;flex-direction:column;cursor:pointer;margin-left:0.5rem;
+}
+.hamburger div{width:22px;height:2.5px;background:#fff;margin:3px 0;}
+
+/* Nav links for mobile */
+.nav-links{
+  display:none;flex-direction:column;background:#185a9d;position:absolute;top:50px;right:1rem;width:180px;padding:0.5rem;border-radius:8px;
+}
+.nav-links.show{display:flex;}
+.nav-links a{color:#fff;text-decoration:none;padding:0.4rem 0;font-size:0.9rem;}
+.nav-links a:hover{color:#43cea2;}
+
+/* Hero */
+.hero{
+  height:1.5in;
+  background:linear-gradient(135deg,#185a9d,#43cea2);
+  display:flex;justify-content:center;align-items:center;
+  color:#fff;text-align:center;margin-top:50px;
+}
+
+/* Search Overlay */
+.search-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:#fff;z-index:3000;display:none;flex-direction:column;padding:1rem;
+}
+.search-header{
+  display:flex;align-items:center;gap:0.5rem;border-bottom:1px solid #ddd;padding-bottom:0.5rem;
+}
+.search-header input{
+  flex:1;padding:0.7rem;border:1px solid #ccc;border-radius:8px;outline:none;font-size:1rem;
+}
+.close-btn{
+  font-size:1rem;color:#000;cursor:pointer;
+}
+
+/* Suggestions */
+.suggestions{
+  margin-top:1rem;
+}
+.suggestions li{
+  list-style:none;padding:0.7rem;border-bottom:1px solid #eee;cursor:pointer;
+}
+.suggestions li:hover{background:#f2f2f2;}
+
+/* Jobs Section */
+.jobs{padding:2rem;background:#f0f2ff;}
+.jobs h3{text-align:center;font-size:1.5rem;margin-bottom:1.5rem;color:#185a9d;}
+.job-list{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;
+}
+.job-card{
+  background:#fff;padding:1rem;border-radius:12px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.08);transition:0.3s;
+}
+.job-card:hover{transform:translateY(-4px);}
+.job-card h4{color:#43cea2;margin-bottom:0.3rem;font-size:1rem;}
+.job-card p{margin-bottom:0.4rem;font-size:0.85rem;}
+.apply-btn{
+  display:inline-block;padding:0.4rem 0.8rem;background:#185a9d;color:#fff;
+  border-radius:6px;text-decoration:none;font-weight:bold;font-size:0.85rem;transition:0.3s;
+}
+.apply-btn:hover{background:#43cea2;}
+
+/* Footer */
+.footer{
+  position:fixed;bottom:0;width:100%;background:#fff;border-top:1px solid #ddd;
+  display:flex;justify-content:space-around;align-items:center;padding:0.5rem 0;box-shadow:0 -2px 8px rgba(0,0,0,0.1);
+}
+.footer a{color:#185a9d;text-decoration:none;font-size:0.9rem;display:flex;flex-direction:column;align-items:center;}
+.footer a i{font-size:1.2rem;margin-bottom:0.2rem;}
+.footer a:hover{color:#43cea2;}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <div class="nav-left">
+    <h1>JobPortal</h1>
+    <input type="text" placeholder="Search jobs..." readonly onclick="openSearch()">
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="/">Home</a>
+    <a href="/jobs">Jobs</a>
+    <a href="/login">Login</a>
+    <a href="/signup">Signup</a>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+      <h1>Find Your Dream Job Here </h1>
+</section>
+
+<!-- Search Overlay -->
+<div class="search-overlay" id="searchOverlay">
+  <form class="search-header" action="/search" method="POST">
+    <input type="text" id="searchInput" name="query" placeholder="Search jobs, skills, companies...">
+    <span class="close-btn" onclick="closeSearch()">❌</span>
+  </form>
+  <ul class="suggestions" id="suggestionsList"></ul>
+</div>
+
+<!-- Search Results -->
+{% if result %}
+<section class="jobs">
+  <h3>{{ title }}</h3> 
+  <div class="job-list">
+    {% for job in result %}
+    <div class="job-card">
+      <h4>{{ job['title'] }}</h4>
+      <p>Company: {{ job['company'] }}</p>
+      <p>Location: {{ job['location'] }}</p>
+      <a href="#" class="apply-btn">View Details</a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Footer -->
+<div class="footer">
+  <a href="/profile"><i class="fa fa-user"></i>Profile</a>
+  <a href="/show_jobs"><i class="fa fa-briefcase"></i>Jobs</a>
+  <a href="/post_job"><i class="fa fa-plus-square"></i>Post Job</a>
+  <a href="/"><i class="fa fa-home"></i>Home</a>
+</div>
+
+<script>
+const overlay = document.getElementById('searchOverlay');
+const input = document.getElementById('searchInput');
+const suggestions = document.getElementById('suggestionsList');
+
+function openSearch(){
+  overlay.style.display = 'flex';
+  input.focus();
+  document.body.style.overflow = 'hidden';
+}
+function closeSearch(){
+  overlay.style.display = 'none';
+  input.value = '';
+  suggestions.innerHTML = '';
+  document.body.style.overflow = 'auto';
+}
+function toggleMenu(){
+  document.getElementById('navLinks').classList.toggle('show');
+}
+
+// Live suggestions
+input.addEventListener("input", function(){
+  let query = this.value;
+  suggestions.innerHTML = '';
+  if(query.length > 0){
+    fetch(`/suggest?query=${query}`)
+      .then(res => res.json())
+      .then(data => {
+        suggestions.innerHTML = '';
+        data.forEach(item=>{
+          let li = document.createElement("li");
+          li.textContent = item;
+          li.onclick = ()=>{
+            input.value = item;
+            suggestions.innerHTML = '';
+            input.form.submit();
+          };
+          suggestions.appendChild(li);
+        });
+      });
+  }
+});
+</script>
+</body>
+</html>
